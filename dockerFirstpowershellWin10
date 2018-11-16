@@ -1,0 +1,538 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Windows\system32> docker --version
+Docker version 18.06.1-ce, build e68fc7a
+PS C:\Windows\system32> docker run hello-world
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+d1725b59e92d: Pull complete
+Digest: sha256:0add3ace90ecb4adbf7777e9aacf18357296e799f81cabc9fde470971e499788
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+PS C:\Windows\system32> docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+hello-world         latest              4ab4c602aa5e        2 months ago        1.84kB
+PS C:\Windows\system32> docker pull ubuntu
+Using default tag: latest
+latest: Pulling from library/ubuntu
+473ede7ed136: Pull complete
+c46b5fa4d940: Pull complete
+93ae3df89c92: Pull complete
+6b1eed27cade: Pull complete
+Digest: sha256:29934af957c53004d7fb6340139880d23fb1952505a15d69a03af0d1418878cb
+Status: Downloaded newer image for ubuntu:latest
+PS C:\Windows\system32> docker run -it -d ubuntu
+2e913de00d94f1e4f14c8b0e20f11f40276e443a6e0f50337c441f2f5fc0e65e
+PS C:\Windows\system32> docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED              STATUS                          PORTS               NAMES
+2e913de00d94        ubuntu              "/bin/bash"         12 seconds ago       Up 11 seconds                                       nostalgic_pike
+5a64df4dfa78        hello-world         "/hello"            About a minute ago   Exited (0) About a minute ago                       vibrant_murdock
+PS C:\Windows\system32> docker exec -t 2e913de00d94 bash
+root@2e913de00d94:/#
+PS C:\Windows\system32> docker exec -t 2e913de00d94 bash
+root@2e913de00d94:/#
+PS C:\Windows\system32> docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES
+2e913de00d94        ubuntu              "/bin/bash"         2 minutes ago       Up 2 minutes                                   nostalgic_pike
+5a64df4dfa78        hello-world         "/hello"            3 minutes ago       Exited (0) 3 minutes ago                       vibrant_murdock
+PS C:\Windows\system32> docker exec -t 2e913de00d94 bash
+root@2e913de00d94:/#
+PS C:\Windows\system32> docker commit 2e913de00d94 vjana/ubuntu
+sha256:dae192f3723883a0a233690392bc6444eb30b6f96e681b3899d161c2eefd6f2c
+PS C:\Windows\system32> docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+vjana/ubuntu        latest              dae192f37238        14 seconds ago      85.8MB
+ubuntu              latest              ea4c82dcd15a        4 weeks ago         85.8MB
+hello-world         latest              4ab4c602aa5e        2 months ago        1.84kB
+PS C:\Windows\system32> docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: vjana
+Password:
+Login Succeeded
+PS C:\Windows\system32>
+PS C:\Windows\system32> docker push vjana/ubuntu
+The push refers to repository [docker.io/vjana/ubuntu]
+76c033092e10: Mounted from library/ubuntu
+2146d867acf3: Mounted from library/ubuntu
+ae1f631f14b7: Mounted from library/ubuntu
+102645f1cf72: Mounted from library/ubuntu
+latest: digest: sha256:fdb9a1bb58e48bef1b267d058538f22b0f4f5be7a3ce58ae5266b6e34b7f87d6 size: 1150
+PS C:\Windows\system32> docker push vjana/ubuntu
+The push refers to repository [docker.io/vjana/ubuntu]
+76c033092e10: Layer already exists
+2146d867acf3: Layer already exists
+ae1f631f14b7: Layer already exists
+102645f1cf72: Layer already exists
+latest: digest: sha256:fdb9a1bb58e48bef1b267d058538f22b0f4f5be7a3ce58ae5266b6e34b7f87d6 size: 1150
+PS C:\Windows\system32> fovkrt ^C
+PS C:\Windows\system32> docker rm 2e913de00d94
+Error response from daemon: You cannot remove a running container 2e913de00d94f1e4f14c8b0e20f11f40276e443a6e0f50337c441f2f5fc0e65e. Stop the container before attempting removal or force remove
+PS C:\Windows\system32> docker stop 2e913de00d94
+2e913de00d94
+PS C:\Windows\system32> docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES
+2e913de00d94        ubuntu              "/bin/bash"         5 minutes ago       Exited (0) 8 seconds ago                       nostalgic_pike
+5a64df4dfa78        hello-world         "/hello"            7 minutes ago       Exited (0) 7 minutes ago                       vibrant_murdock
+PS C:\Windows\system32> docker rm 2e913de00d94
+2e913de00d94
+PS C:\Windows\system32> docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES
+5a64df4dfa78        hello-world         "/hello"            8 minutes ago       Exited (0) 8 minutes ago                       vibrant_murdock
+PS C:\Windows\system32> docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+vjana/ubuntu        latest              dae192f37238        3 minutes ago       85.8MB
+ubuntu              latest              ea4c82dcd15a        4 weeks ago         85.8MB
+hello-world         latest              4ab4c602aa5e        2 months ago        1.84kB
+PS C:\Windows\system32> docker rmi dae192f37238
+Untagged: vjana/ubuntu:latest
+Untagged: vjana/ubuntu@sha256:fdb9a1bb58e48bef1b267d058538f22b0f4f5be7a3ce58ae5266b6e34b7f87d6
+Deleted: sha256:dae192f3723883a0a233690392bc6444eb30b6f96e681b3899d161c2eefd6f2c
+PS C:\Windows\system32> docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu              latest              ea4c82dcd15a        4 weeks ago         85.8MB
+hello-world         latest              4ab4c602aa5e        2 months ago        1.84kB
+PS C:\Windows\system32> docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES
+5a64df4dfa78        hello-world         "/hello"            9 minutes ago       Exited (0) 9 minutes ago                       vibrant_murdock
+PS C:\Windows\system32> docker run -it -d ubuntu
+0347e54b09a4c6f03fcae434367cdb4e534135e0d3f0def57713448505a3301c
+PS C:\Windows\system32> docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES
+0347e54b09a4        ubuntu              "/bin/bash"         2 seconds ago       Up 1 second                                     elastic_nobel
+5a64df4dfa78        hello-world         "/hello"            10 minutes ago      Exited (0) 10 minutes ago                       vibrant_murdock
+PS C:\Windows\system32> docker exec -t 0347e54b09a4 bash
+root@0347e54b09a4:/#
+PS C:\Windows\system32> ^C
+PS C:\Windows\system32> docker exec -t 0347e54b09a4 bash
+root@0347e54b09a4:/#
+PS C:\Windows\system32> ^C
+PS C:\Windows\system32> docker pull linux
+Using default tag: latest
+Error response from daemon: pull access denied for linux, repository does not exist or may require 'docker login'
+PS C:\Windows\system32> docker pull solaris
+Using default tag: latest
+Error response from daemon: pull access denied for solaris, repository does not exist or may require 'docker login'
+PS C:\Windows\system32> docker pull
+"docker pull" requires exactly 1 argument.
+See 'docker pull --help'.
+
+Usage:  docker pull [OPTIONS] NAME[:TAG|@DIGEST]
+
+Pull an image or a repository from a registry
+PS C:\Windows\system32> docker pull --help
+
+Usage:  docker pull [OPTIONS] NAME[:TAG|@DIGEST]
+
+Pull an image or a repository from a registry
+
+Options:
+  -a, --all-tags                Download all tagged images in the repository
+      --disable-content-trust   Skip image verification (default true)
+PS C:\Windows\system32> start notepad++
+PS C:\Windows\system32> docker pull busybox
+Using default tag: latest
+latest: Pulling from library/busybox
+90e01955edcd: Pull complete
+Digest: sha256:2a03a6059f21e150ae84b0973863609494aad70f0a80eaeb64bddd8d92465812
+Status: Downloaded newer image for busybox:latest
+PS C:\Windows\system32> docker run busybox
+PS C:\Windows\system32> docker run busybox echo "jana"
+jana
+PS C:\Windows\system32> docker run -t busybox sh
+/ #
+PS C:\Windows\system32> docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED              STATUS                          PORTS               NAMES
+422faa50ea2e        busybox             "sh"                42 seconds ago       Up 40 seconds                                       amazing_shaw
+9ecdfc6668b4        busybox             "echo jana"         About a minute ago   Exited (0) 58 seconds ago                           quirky_swanson
+d6d616e4dfb6        busybox             "sh"                About a minute ago   Exited (0) About a minute ago                       elastic_engelbart
+0347e54b09a4        ubuntu              "/bin/bash"         13 minutes ago       Up 12 minutes                                       elastic_nobel
+5a64df4dfa78        hello-world         "/hello"            23 minutes ago       Exited (0) 23 minutes ago                           vibrant_murdock
+PS C:\Windows\system32> docker stop d6d616e4dfb6
+d6d616e4dfb6
+PS C:\Windows\system32>
+5040bd298390: Pull complete
+fce5728aad85: Pull complete
+76610ec20bf5: Pull complete
+60170fec2151: Pull complete
+e98f73de8f0d: Pull complete
+11f7af24ed9c: Pull complete
+49e2d6393f32: Pull complete
+bb9cdec9c7f3: Pull complete
+Digest: sha256:c1ff613e8ba25833d2e1940da0940c3824f03f802c449f3d1815a66b7f8c0e9d  37.09MB/51.36MB
+Status: Downloaded newer image for java:latest              About a minute ago   Up About a minute
+PS C:\Windows\system32> g [===================================>               ]  36.57MB/51.36MB
+PS C:\Windows\system32> box             "echo jana"         2 minutes ago        Exited (0) 2 minutes ago
+PS C:\Windows\system32>
+PS C:\Windows\system32> tu              "/bin/bash"         14 minutes ago       Up 14 minutes
+PS C:\Windows\system32> g [===================================>               ]  36.05MB/51.36MB
+PS C:\Windows\system32> o-world         "/hello"            24 minutes ago       Exited (0) 24 minutes ago
+PS C:\Windows\system32> g [=============>                                     ]  34.41MB/130.1MB
+PS C:\Windows\system32> docker pull java
+PS C:\Windows\system32> g [=============>                                     ]  33.87MB/130.1MB
+PS C:\Windows\system32> rary/java
+PS C:\Windows\system32> g [============>                                      ]  33.33MB/130.1MB
+PS C:\Windows\system32> omplete
+PS C:\Windows\system32> omplete
+PS C:\Windows\system32> omplete
+PS C:\Windows\system32> omplete
+PS C:\Windows\system32> omplete
+PS C:\Windows\system32> g [============>                                      ]  32.26MB/130.1MB
+PS C:\Windows\system32> omplete
+PS C:\Windows\system32> docker run -t java
+root@2953e81e19a6:/#
+PS C:\Windows\system32> docker attach java
+Error: No such container: java
+PS C:\Windows\system32> docker -t -d java
+unknown shorthand flag: 't' in -t
+See 'docker --help'.
+
+Usage:  docker [OPTIONS] COMMAND
+
+A self-sufficient runtime for containers
+
+Options:
+      --config string      Location of client config files (default
+                           "C:\\Users\\Jana V\\.docker")
+  -D, --debug              Enable debug mode
+  -H, --host list          Daemon socket(s) to connect to
+  -l, --log-level string   Set the logging level
+                           ("debug"|"info"|"warn"|"error"|"fatal")
+                           (default "info")
+      --tls                Use TLS; implied by --tlsverify
+      --tlscacert string   Trust certs signed only by this CA (default
+                           "C:\\Users\\Jana V\\.docker\\ca.pem")
+      --tlscert string     Path to TLS certificate file (default
+                           "C:\\Users\\Jana V\\.docker\\cert.pem")
+      --tlskey string      Path to TLS key file (default "C:\\Users\\Jana
+                           V\\.docker\\key.pem")
+      --tlsverify          Use TLS and verify the remote
+  -v, --version            Print version information and quit
+
+Management Commands:
+  checkpoint  Manage checkpoints
+  config      Manage Docker configs
+  container   Manage containers
+  image       Manage images
+  manifest    Manage Docker image manifests and manifest lists
+  network     Manage networks
+  node        Manage Swarm nodes
+  plugin      Manage plugins
+  secret      Manage Docker secrets
+  service     Manage services
+  stack       Manage Docker stacks
+  swarm       Manage Swarm
+  system      Manage Docker
+  trust       Manage trust on Docker images
+  volume      Manage volumes
+
+Commands:
+  attach      Attach local standard input, output, and error streams to a running container
+  build       Build an image from a Dockerfile
+  commit      Create a new image from a container's changes
+  cp          Copy files/folders between a container and the local filesystem
+  create      Create a new container
+  deploy      Deploy a new stack or update an existing stack
+  diff        Inspect changes to files or directories on a container's filesystem
+  events      Get real time events from the server
+  exec        Run a command in a running container
+  export      Export a container's filesystem as a tar archive
+  history     Show the history of an image
+  images      List images
+  import      Import the contents from a tarball to create a filesystem image
+  info        Display system-wide information
+  inspect     Return low-level information on Docker objects
+  kill        Kill one or more running containers
+  load        Load an image from a tar archive or STDIN
+  login       Log in to a Docker registry
+  logout      Log out from a Docker registry
+  logs        Fetch the logs of a container
+  pause       Pause all processes within one or more containers
+  port        List port mappings or a specific mapping for the container
+  ps          List containers
+  pull        Pull an image or a repository from a registry
+  push        Push an image or a repository to a registry
+  rename      Rename a container
+  restart     Restart one or more containers
+  rm          Remove one or more containers
+  rmi         Remove one or more images
+  run         Run a command in a new container
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  search      Search the Docker Hub for images
+  start       Start one or more stopped containers
+  stats       Display a live stream of container(s) resource usage statistics
+  stop        Stop one or more running containers
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+  top         Display the running processes of a container
+  unpause     Unpause all processes within one or more containers
+  update      Update configuration of one or more containers
+  version     Show the Docker version information
+  wait        Block until one or more containers stop, then print their exit codes
+
+Run 'docker COMMAND --help' for more information on a command.
+
+PS C:\Windows\system32> docker run -it -d java
+33f732c3dd18e3dee4b7902d0171a8b2be70db1931a7d7682ef0866e6036e379
+PS C:\Windows\system32> docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                         PORTS               NAMES
+33f732c3dd18        java                "/bin/bash"         6 seconds ago       Up 4 seconds                                       vigilant_jennings
+2953e81e19a6        java                "/bin/bash"         2 minutes ago       Up 2 minutes                                       hardcore_darwin
+422faa50ea2e        busybox             "sh"                25 minutes ago      Exited (137) 23 minutes ago                        amazing_shaw
+9ecdfc6668b4        busybox             "echo jana"         25 minutes ago      Exited (0) 25 minutes ago                          quirky_swanson
+0347e54b09a4        ubuntu              "/bin/bash"         37 minutes ago      Up 37 minutes                                      elastic_nobel
+5a64df4dfa78        hello-world         "/hello"            About an hour ago   Exited (0) About an hour ago                       vibrant_murdock
+PS C:\Windows\system32> docker run -t java
+root@0b6729271630:/#
+PS C:\Windows\system32> docker attach java
+Error: No such container: java
+PS C:\Windows\system32> docker run -t java bash
+root@24926ae1e581:/#
+PS C:\Windows\system32> docker attach java
+Error: No such container: java
+PS C:\Windows\system32> docker start -a java
+Error: No such container: java
+PS C:\Windows\system32> docker start -a ubuntu
+Error: No such container: ubuntu
+PS C:\Windows\system32> docker exec -t java
+"docker exec" requires at least 2 arguments.
+See 'docker exec --help'.
+
+Usage:  docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
+
+Run a command in a running container
+PS C:\Windows\system32> docker exec -t java bash
+Error: No such container: java
+PS C:\Windows\system32> docker exec -t 33f732c3dd18  bash
+root@33f732c3dd18:/#
+PS C:\Windows\system32>
+PS C:\Windows\system32> docker attach 33f732c3dd18
+root@33f732c3dd18:/# java -version
+openjdk version "1.8.0_111"
+OpenJDK Runtime Environment (build 1.8.0_111-8u111-b14-2~bpo8+1-b14)
+OpenJDK 64-Bit Server VM (build 25.111-b14, mixed mode)
+root@33f732c3dd18:/# ^C
+root@33f732c3dd18:/# exit
+exit
+PS C:\Windows\system32> docker exec -i java bash
+Error: No such container: java
+PS C:\Windows\system32> docker exec -i 33f732c3dd18 bash
+Error response from daemon: Container 33f732c3dd18e3dee4b7902d0171a8b2be70db1931a7d7682ef0866e6036e379 is not running
+PS C:\Windows\system32> docker attach java^C
+PS C:\Windows\system32> docker exec -t 33f732c3dd18 bash
+Error response from daemon: Container 33f732c3dd18e3dee4b7902d0171a8b2be70db1931a7d7682ef0866e6036e379 is not running
+PS C:\Windows\system32> docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                            PORTS               NAMES
+24926ae1e581        java                "bash"              4 minutes ago       Up 4 minutes                                          xenodochial_meninsky
+0b6729271630        java                "/bin/bash"         4 minutes ago       Up 4 minutes                                          gallant_hypatia
+33f732c3dd18        java                "/bin/bash"         5 minutes ago       Exited (130) About a minute ago                       vigilant_jennings
+2953e81e19a6        java                "/bin/bash"         7 minutes ago       Up 7 minutes                                          hardcore_darwin
+422faa50ea2e        busybox             "sh"                30 minutes ago      Exited (137) 28 minutes ago                           amazing_shaw
+9ecdfc6668b4        busybox             "echo jana"         30 minutes ago      Exited (0) 30 minutes ago                             quirky_swanson
+0347e54b09a4        ubuntu              "/bin/bash"         42 minutes ago      Up 42 minutes                                         elastic_nobel
+5a64df4dfa78        hello-world         "/hello"            About an hour ago   Exited (0) About an hour ago                          vibrant_murdock
+PS C:\Windows\system32> docker exec -i 0b6729271630 bash
+java -version
+Unrecognized option: -version
+Error: Could not create the Java Virtual Machine.
+Error: A fatal exception has occurred. Program will exit.
+javac
+bash: line 2: $'javac\r': command not found
+java
+bash: line 3: $'java\r': command not found
+PS C:\Windows\system32> docker ps -a^C
+PS C:\Windows\system32> docker start 33f732c3dd18
+33f732c3dd18
+PS C:\Windows\system32> docker exec -i 33f732c3dd18  bash
+java -version
+Unrecognized option: -version
+Error: Could not create the Java Virtual Machine.
+Error: A fatal exception has occurred. Program will exit.
+PS C:\Windows\system32>
+PS C:\Windows\system32> docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                         PORTS               NAMES
+24926ae1e581        java                "bash"              6 minutes ago       Up 6 minutes                                       xenodochial_meninsky
+0b6729271630        java                "/bin/bash"         6 minutes ago       Up 6 minutes                                       gallant_hypatia
+33f732c3dd18        java                "/bin/bash"         6 minutes ago       Up 18 seconds                                      vigilant_jennings
+2953e81e19a6        java                "/bin/bash"         9 minutes ago       Up 9 minutes                                       hardcore_darwin
+422faa50ea2e        busybox             "sh"                31 minutes ago      Exited (137) 30 minutes ago                        amazing_shaw
+9ecdfc6668b4        busybox             "echo jana"         32 minutes ago      Exited (0) 32 minutes ago                          quirky_swanson
+0347e54b09a4        ubuntu              "/bin/bash"         44 minutes ago      Up 44 minutes                                      elastic_nobel
+5a64df4dfa78        hello-world         "/hello"            About an hour ago   Exited (0) About an hour ago                       vibrant_murdock
+PS C:\Windows\system32> diocke^C
+PS C:\Windows\system32> docker rmi java
+Error response from daemon: conflict: unable to remove repository reference "java" (must force) - container 24926ae1e581 is using its referenced image d23bdf5b1b1b
+PS C:\Windows\system32> docker stop 33f732c3dd18
+33f732c3dd18
+PS C:\Windows\system32> docker rm 33f732c3dd18
+33f732c3dd18
+PS C:\Windows\system32> docker stop 0b6729271630
+0b6729271630
+PS C:\Windows\system32> docker ps -a
+>> docker rm 0b6729271630
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                         PORTS               NAMES
+24926ae1e581        java                "bash"              6 minutes ago       Up 6 minutes                                       xenodochial_meninsky
+0b6729271630        java                "/bin/bash"         7 minutes ago       Exited (0) 6 seconds ago                           gallant_hypatia
+2953e81e19a6        java                "/bin/bash"         9 minutes ago       Up 9 minutes                                       hardcore_darwin
+422faa50ea2e        busybox             "sh"                32 minutes ago      Exited (137) 30 minutes ago                        amazing_shaw
+9ecdfc6668b4        busybox             "echo jana"         32 minutes ago      Exited (0) 32 minutes ago                          quirky_swanson
+0347e54b09a4        ubuntu              "/bin/bash"         44 minutes ago      Up 44 minutes                                      elastic_nobel
+5a64df4dfa78        hello-world         "/hello"            About an hour ago   Exited (0) About an hour ago                       vibrant_murdock
+0b6729271630
+PS C:\Windows\system32>
+>> docker stop 9ecdfc6668b4
+9ecdfc6668b4
+PS C:\Windows\system32> docker rm 9ecdfc6668b4
+9ecdfc6668b4
+PS C:\Windows\system32> docker ps -a
+>> docker rm 0b6729271630
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                         PORTS               NAMES
+24926ae1e581        java                "bash"              7 minutes ago       Up 7 minutes                                       xenodochial_meninsky
+2953e81e19a6        java                "/bin/bash"         10 minutes ago      Up 10 minutes                                      hardcore_darwin
+422faa50ea2e        busybox             "sh"                33 minutes ago      Exited (137) 31 minutes ago                        amazing_shaw
+0347e54b09a4        ubuntu              "/bin/bash"         45 minutes ago      Up 45 minutes                                      elastic_nobel
+5a64df4dfa78        hello-world         "/hello"            About an hour ago   Exited (0) About an hour ago                       vibrant_murdock
+Error: No such container: 0b6729271630
+PS C:\Windows\system32>
+PS C:\Windows\system32> docker exec -t 24926ae1e581
+"docker exec" requires at least 2 arguments.
+See 'docker exec --help'.
+
+Usage:  docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
+
+Run a command in a running container
+PS C:\Windows\system32> docker exec -t 24926ae1e581 bash
+root@24926ae1e581:/#
+PS C:\Windows\system32> docker attach 24926ae1e581
+PS C:\Windows\system32> docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                         PORTS               NAMES
+24926ae1e581        java                "bash"              8 minutes ago       Up 8 minutes                                       xenodochial_meninsky
+2953e81e19a6        java                "/bin/bash"         11 minutes ago      Up 11 minutes                                      hardcore_darwin
+422faa50ea2e        busybox             "sh"                34 minutes ago      Exited (137) 32 minutes ago                        amazing_shaw
+0347e54b09a4        ubuntu              "/bin/bash"         About an hour ago   Up About an hour                                   elastic_nobel
+5a64df4dfa78        hello-world         "/hello"            About an hour ago   Exited (0) About an hour ago                       vibrant_murdock
+PS C:\Windows\system32> docke run -it java
+docke : The term 'docke' is not recognized as the name of a cmdlet, function, script file, or operable program. Check
+the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ docke run -it java
++ ~~~~~
+    + CategoryInfo          : ObjectNotFound: (docke:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+
+PS C:\Windows\system32> docker run -it java
+root@57822c2716be:/# java -version
+openjdk version "1.8.0_111"
+OpenJDK Runtime Environment (build 1.8.0_111-8u111-b14-2~bpo8+1-b14)
+OpenJDK 64-Bit Server VM (build 25.111-b14, mixed mode)
+root@57822c2716be:/# exit
+exit
+PS C:\Windows\system32> docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                         PORTS               NAMES
+57822c2716be        java                "/bin/bash"         22 seconds ago      Exited (0) 6 seconds ago                           dreamy_mclean
+24926ae1e581        java                "bash"              10 minutes ago      Up 10 minutes                                      xenodochial_meninsky
+2953e81e19a6        java                "/bin/bash"         13 minutes ago      Up 13 minutes                                      hardcore_darwin
+422faa50ea2e        busybox             "sh"                36 minutes ago      Exited (137) 34 minutes ago                        amazing_shaw
+0347e54b09a4        ubuntu              "/bin/bash"         About an hour ago   Up About an hour                                   elastic_nobel
+5a64df4dfa78        hello-world         "/hello"            About an hour ago   Exited (0) About an hour ago                       vibrant_murdock
+PS C:\Windows\system32> docker run -it ubuntu
+root@742036c963bc:/# ls
+bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@742036c963bc:/# time
+
+real    0m0.000s
+user    0m0.000s
+sys     0m0.000s
+root@742036c963bc:/# docker ps -a
+bash: docker: command not found
+root@742036c963bc:/# docker ^C
+root@742036c963bc:/# exit
+exit
+PS C:\Windows\system32> docker run -it ubuntu
+root@bf5b9ae315cb:/# dsf
+bash: dsf: command not found
+root@bf5b9ae315cb:/# exit
+exit
+PS C:\Windows\system32> docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED              STATUS                         PORTS               NAMES
+bf5b9ae315cb        ubuntu              "/bin/bash"         8 seconds ago        Exited (127) 2 seconds ago                         awesome_bardeen
+742036c963bc        ubuntu              "/bin/bash"         43 seconds ago       Exited (130) 12 seconds ago                        brave_shaw
+57822c2716be        java                "/bin/bash"         About a minute ago   Exited (0) 58 seconds ago                          dreamy_mclean
+24926ae1e581        java                "bash"              11 minutes ago       Up 11 minutes                                      xenodochial_meninsky
+2953e81e19a6        java                "/bin/bash"         14 minutes ago       Up 14 minutes                                      hardcore_darwin
+422faa50ea2e        busybox             "sh"                37 minutes ago       Exited (137) 35 minutes ago                        amazing_shaw
+0347e54b09a4        ubuntu              "/bin/bash"         About an hour ago    Up About an hour                                   elastic_nobel
+5a64df4dfa78        hello-world         "/hello"            About an hour ago    Exited (0) About an hour ago                       vibrant_murdock
+PS C:\Windows\system32> docker rm 742036c963bc
+742036c963bc
+PS C:\Windows\system32> docker rm 24926ae1e581
+Error response from daemon: You cannot remove a running container 24926ae1e581a976e1a110a758fe5172041eebd0c2be5202c7bcaf975b0b23ac. Stop the container before attempting removal or force remove
+PS C:\Windows\system32>
+>> docker rm 2953e81e19a6
+Error response from daemon: You cannot remove a running container 2953e81e19a6573cace74412917719e23c1f08835781eda1d47bc3edeb396e3c. Stop the container before attempting removal or force remove
+PS C:\Windows\system32> docker stop 2953e81e19a6
+2953e81e19a6
+PS C:\Windows\system32> docker rm 24926ae1e581
+>> docker stop 24926ae1e581
+>> docker rm 2953e81e19a6
+Error response from daemon: You cannot remove a running container 24926ae1e581a976e1a110a758fe5172041eebd0c2be5202c7bcaf975b0b23ac. Stop the container before attempting removal or force remove
+24926ae1e581
+2953e81e19a6
+PS C:\Windows\system32> docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED              STATUS                            PORTS               NAMES
+bf5b9ae315cb        ubuntu              "/bin/bash"         About a minute ago   Exited (127) About a minute ago                       awesome_bardeen
+57822c2716be        java                "/bin/bash"         2 minutes ago        Exited (0) 2 minutes ago                              dreamy_mclean
+24926ae1e581        java                "bash"              12 minutes ago       Exited (0) 10 seconds ago                             xenodochial_meninsky
+422faa50ea2e        busybox             "sh"                38 minutes ago       Exited (137) 36 minutes ago                           amazing_shaw
+0347e54b09a4        ubuntu              "/bin/bash"         About an hour ago    Up About an hour                                      elastic_nobel
+5a64df4dfa78        hello-world         "/hello"            About an hour ago    Exited (0) About an hour ago                          vibrant_murdock
+PS C:\Windows\system32> docker stop 24926ae1e581
+24926ae1e581
+PS C:\Windows\system32> docker rm 24926ae1e581
+24926ae1e581
+PS C:\Windows\system32> docker rm 422faa50ea2e
+>> docker stop 422faa50ea2e
+422faa50ea2e
+Error response from daemon: No such container: 422faa50ea2e
+PS C:\Windows\system32> docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                            PORTS               NAMES
+bf5b9ae315cb        ubuntu              "/bin/bash"         2 minutes ago       Exited (127) About a minute ago                       awesome_bardeen
+57822c2716be        java                "/bin/bash"         3 minutes ago       Exited (0) 2 minutes ago                              dreamy_mclean
+0347e54b09a4        ubuntu              "/bin/bash"         About an hour ago   Up About an hour                                      elastic_nobel
+5a64df4dfa78        hello-world         "/hello"            About an hour ago   Exited (0) About an hour ago                          vibrant_murdock
+PS C:\Windows\system32> docker stop 0347e54b09a4
+0347e54b09a4
+PS C:\Windows\system32> docker ps -a
+>> docker rm 0347e54b09a4
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                         PORTS               NAMES
+bf5b9ae315cb        ubuntu              "/bin/bash"         2 minutes ago       Exited (127) 2 minutes ago                         awesome_bardeen
+57822c2716be        java                "/bin/bash"         3 minutes ago       Exited (0) 3 minutes ago                           dreamy_mclean
+0347e54b09a4        ubuntu              "/bin/bash"         About an hour ago   Exited (0) 7 seconds ago                           elastic_nobel
+5a64df4dfa78        hello-world         "/hello"            About an hour ago   Exited (0) About an hour ago                       vibrant_murdock
+0347e54b09a4
+PS C:\Windows\system32> docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu              latest              ea4c82dcd15a        4 weeks ago         85.8MB
+busybox             latest              59788edf1f3e        6 weeks ago         1.15MB
+hello-world         latest              4ab4c602aa5e        2 months ago        1.84kB
+java                latest              d23bdf5b1b1b        22 months ago       643MB
