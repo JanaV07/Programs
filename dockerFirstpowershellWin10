@@ -1,3 +1,33 @@
+PS C:\Users\Jana V> docker ps //list continers
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+PS C:\Users\Jana V> docker ps -a //list images
+CONTAINER ID        IMAGE               COMMAND             CREATED              STATUS                        PORTS               NAMES
+267481e348eb        java                "/bin/bash"         About a minute ago   Exited (130) 51 seconds ago                       relaxed_williams
+64c2b46ca8a9        java                "/bin/bash"         6 minutes ago        Exited (0) 14 seconds ago                         dreamy_lamarr
+bf5b9ae315cb        ubuntu              "/bin/bash"         2 weeks ago          Exited (255) 2 weeks ago                          awesome_bardeen
+57822c2716be        java                "/bin/bash"         2 weeks ago          Exited (0) 2 weeks ago                            dreamy_mclean
+5a64df4dfa78        hello-world         "/hello"            2 weeks ago          Exited (0) 2 weeks ago                            vibrant_murdock
+
+
+PS C:\Users\Jana V> docker start 57822c2716be  // start container
+57822c2716be
+PS C:\Users\Jana V> docker ps    //// list running containers
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+57822c2716be        java                "/bin/bash"         2 weeks ago         Up 3 seconds                            dreamy_mclean
+
+PS C:\Users\Jana V> docker exec -it 57822c2716be bash  // exec running container
+root@57822c2716be:/# java -version
+openjdk version "1.8.0_111"
+OpenJDK Runtime Environment (build 1.8.0_111-8u111-b14-2~bpo8+1-b14)
+OpenJDK 64-Bit Server VM (build 25.111-b14, mixed mode)
+root@57822c2716be:/# exit
+
+
+
+________________________________________________________________________________________
+
+
 Windows PowerShell
 Copyright (C) Microsoft Corporation. All rights reserved.
 
