@@ -1,4 +1,37 @@
 PS C:\Users\Jana V> docker ps //list continers
+PS C:\Users\Jana V> docker ps //list continers
+PS C:\Users\Jana V> docker ps -a //list images
+PS C:\Users\Jana V> docker start 57822c2716be  // start container
+PS C:\Users\Jana V> docker ps    //// list running containers
+PS C:\Users\Jana V> docker exec -it 57822c2716be bash  // exec running container
+PS C:\Windows\system32> docker --version
+PS C:\Windows\system32> docker run hello-world
+PS C:\Windows\system32> docker images
+PS C:\Windows\system32> docker pull ubuntu
+PS C:\Windows\system32> docker run -it -d ubuntu
+PS C:\Windows\system32> docker ps -a
+PS C:\Windows\system32> docker exec -t 2e913de00d94 bash
+PS C:\Windows\system32> docker exec -t 2e913de00d94 bash
+PS C:\Windows\system32> docker ps -a
+PS C:\Windows\system32> docker exec -t 2e913de00d94 bash
+PS C:\Windows\system32> docker commit 2e913de00d94 vjana/ubuntu
+PS C:\Windows\system32> docker images
+PS C:\Windows\system32> docker login
+PS C:\Windows\system32>
+PS C:\Windows\system32> docker push vjana/ubuntu
+PS C:\Windows\system32> docker push vjana/ubuntu
+PS C:\Windows\system32> docker rm 2e913de00d94
+PS C:\Windows\system32> docker stop 2e913de00d94
+\PS C:\Windows\system32> docker ps -a
+PS C:\Windows\system32> docker rm 2e913de00d94
+PS C:\Windows\system32> docker ps -a
+PS C:\Windows\system32> docker images
+PS C:\Windows\system32> docker rmi dae192f37238
+PS C:\Windows\system32> docker images
+PS C:\Windows\system32> docker ps -a
+PS C:\Windows\system32> docker run -it -d ubuntu
+-------------------------------------------
+PS C:\Users\Jana V> docker ps //list continers
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 
 PS C:\Users\Jana V> docker ps -a //list images
