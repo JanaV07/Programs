@@ -2,7 +2,7 @@
 pending works
 
 1.PPT 
-Good Morning and Good Evening everyone - today we are here to discuss about designing multiple versions for our NXS NEXEN APIs.
+Good Morning and Good Evening everyone - today we are about to discuss maintianing multiple versions for our NXS NEXEN APIs.
 
 Myself - Janarthanan Veeramani from NXS DEV
 
@@ -43,9 +43,9 @@ and a deprecation schedule for the vN.
 
 the following slide shows the USER model and key use Cases
 
-For Example 2 clients consuming our API Version V1, later a new breaking change required for one of the consumer - which will lead to the new Version of the API V2. 
+For Example 2 clients consuming our API Version V1, later a new breaking change required for one of the consumer - which will lead to a new Version of the API V2. 
 
-A grace period will be given for the other consumer to migrate to v2. Once he migrated V1 will be deprecated. 
+A grace period will be given for the other consumer to migrate to v2. Once he migrated to V2. V1 will be deprecated. 
 
 and the same pattern continues.
 
@@ -53,7 +53,7 @@ The benifits will be
 Client Flexibility
 Reduce frequency of breaking releases
 
-The slide will show in depth detail with te API Versioning :
+The slide will show in depth detail on the API Versioning :
 
 Whenever we receive a breaking change - a new Version of API will be developed and the deprecation countdown will be triggered to the existing version.
 
@@ -66,4 +66,4 @@ The following slide shows the overall architecture of our NetXservices
 7
 The blue highlighted parts will be modified for this API Versioning and the new API will be exposed in a new GF domain nxs.bnymellon.net
 
-The following slide shows the Data flow - The blue highlighted will be the new version which will be developed using spring boot in GF infrastructure.
+The following slide shows the Data flow- The blue highlighted will be the new version which will be developed using spring boot in GF infrastructure.
